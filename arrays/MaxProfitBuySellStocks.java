@@ -1,3 +1,6 @@
+
+package arrays;
+
 public class MaxProfitBuySellStocks {
     public static int  GetMaxProfit(int prices[]){
 
@@ -7,7 +10,7 @@ public class MaxProfitBuySellStocks {
 
         for (int i = 0; i < prices.length; i++) {
             if(buyingPrice <= prices[i]){
-                // means selling price is higher. so obvis=ously profit to hoboe
+                // means selling price is higher. so obviously profit to hoboe
                 int todaysProfit = prices[i] -  buyingPrice ;
                 maxProfit = Math.max(maxProfit,todaysProfit);
             }else{

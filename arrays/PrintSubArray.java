@@ -1,3 +1,4 @@
+package arrays;
 public class PrintSubArray{
 
    PrintSubArray(int a[]){
