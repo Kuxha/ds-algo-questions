@@ -284,9 +284,7 @@ public class StackImpl {
         
     }
 
-    public static void maximumHistogramArea(){
 
-    }
 
      public static void nextGreaterElement(int a[]){
 
@@ -335,11 +333,199 @@ public class StackImpl {
         System.out.println();
 
     }
+
+
+
+    public static void nextSmallerElement(int a[]){
+
+    
+        int n = a.length;
+        if(n==0) return;
+        int res[] = new int[n];
+        System.out.println("Array");
+        for (int i = 0; i <n; i++) {
+            System.out.print(a[i] + " ");
+        }
+        System.out.println();
+
+        Stack<Integer> st = new Stack<>();
+
+        // The last number will have no next greater , so it's answer will be -1 always
+        res[n-1] = -1;
+        st.push(a[n-1]); // push last index to stack
+
+
+        // For next greater element , we traverse backwards
+        for (int i = n-2; i>=0; i--) {
+            while(!st.isEmpty() && st.peek()>=a[i] ){
+                // Until the stack is empty , and until we encounter a value in the stack which is larger than the current value - keep poppin
+                st.pop();
+            }
+
+            // in case we came out of loop because stack is empty , it means there are no greater elements on the right
+            if(st.isEmpty()){
+                res[i] = -1;
+            }else{
+                // else what it means is the element at top of stack is greater than current , so add that to result for curr
+                res[i] = st.peek();
+            }
+
+            // once we have figured out next greater element for a number , add it to stack
+            st.push(a[i]);
+
+
+        }
+
+        System.out.println("RES");
+        for (int i = 0; i < res.length; i++) {
+            System.out.print(res[i] + " ");
+        }
+        System.out.println();
+
+    }
+
+
+    public static int[] nextSmallerElementIndex(int a[]){
+
+    
+        int n = a.length;
+        if(n==0){
+            return new int[]{};
+        }
+        int res[] = new int[n];
+        System.out.println("Array");
+        for (int i = 0; i <n; i++) {
+            System.out.print(a[i] + " ");
+        }
+        System.out.println();
+
+        Stack<Integer> st = new Stack<>();
+
+        // The last index will be = n , since next smaller element does't exist
+        res[n-1] = n;
+        st.push(n-1); // push last index to stack
+
+
+        // For next greater element , we traverse backwards
+        for (int i = n-2; i>=0; i--) {
+            while(!st.isEmpty() && a[st.peek()]>=a[i] ){
+                // Until the stack is empty , and until we encounter a value in the stack which is larger than the current value - keep poppin
+                st.pop();
+            }
+
+            // in case we came out of loop because stack is empty , it means there are no greater elements on the right
+            if(st.isEmpty()){
+                res[i] = n;
+            }else{
+                // else what it means is the element at top of stack is greater than current , so add that to result for curr
+                res[i] = st.peek();
+            }
+
+            // once we have figured out next greater element for a number , add it to stack
+            st.push(i);
+
+
+        }
+
+        System.out.println("RES");
+        for (int i = 0; i < res.length; i++) {
+            System.out.print(res[i] + " ");
+        }
+        System.out.println();
+        return res;
+
+    }
+
+
+    public static int[] previousSmallerElementIndex(int a[]){
+
+    
+        int n = a.length;
+        if(n==0) {
+            return new int[]{};
+        }
+        int res[] = new int[n];
+        System.out.println("Array");
+        for (int i = 0; i <n; i++) {
+            System.out.print(a[i] + " ");
+        }
+        System.out.println();
+        Stack<Integer> st = new Stack<>();
+
+        // The first index wont have a previous smaller, so anser always -1
+        res[0] = -1;
+        st.push(n-1); // push last index to stack
+
+
+        // For next greater element , we traverse backwards
+        for (int i = 1; i<n; i++) {
+            while(!st.isEmpty() && a[st.peek()]>=a[i] ){
+                // Until the stack is empty , and until we encounter a value in the stack which is larger than the current value - keep poppin
+                st.pop();
+            }
+
+            // in case we came out of loop because stack is empty , it means there are no greater elements on the right
+            if(st.isEmpty()){
+                res[i] = -1;
+            }else{
+                // else what it means is the element at top of stack is greater than current , so add that to result for curr
+                res[i] = st.peek();
+            }
+
+            // once we have figured out next greater element for a number , add it to stack
+            st.push(i);
+
+
+        }
+
+        System.out.println("RES");
+        for (int i = 0; i < res.length; i++) {
+            System.out.print(res[i] + " ");
+        }
+        System.out.println();
+
+        return res;
+    }
+
+
+
+    public static int maximumHistogramArea(int a[]){
+
+        // First Find Next Smaller element array
+        int[] prevSmallerIndex = previousSmallerElementIndex(a);
+        int[] nextSmallerIndex = nextSmallerElementIndex(a);
+
+        // We need to find maximum area possible for each bar
+
+        int area=0,height=0,width = 0,maximumArea = 0;
+
+
+        System.out.println("Maximum Histogram Area - for the following array");
+        for (int i = 0; i < a.length; i++) {
+                System.out.print(a[i] + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < a.length; i++) {
+
+            height = a[i];
+            width = nextSmallerIndex[i] - prevSmallerIndex[i] -1;
+            area = height * width;
+            System.out.print(area +" ");
+            maximumArea = Math.max(maximumArea, area);
+            
+        }
+        System.out.println();
+
+        return maximumArea;
+
+    }
     public static void main(String[] args) {
 
+       System.out.println("NEXT GREATER ELEMENT");
 
-
-
+        int b[] = {6, 2, 5, 4, 5, 1, 6};
+        // answer is 2,6,10,6,8,3
+        System.out.println("maximum area is " + maximumHistogramArea(b));
     }
     
 }
