@@ -80,54 +80,23 @@ public class StackImpl {
 
         int b[] = {10, 4, 5 ,90, 120, 80};
         nextGreaterElement(b);
-    }
-
-    public static void nextGreaterElement(int a[]){
-
-    
-        int n = a.length;
-        if(n==0) return;
-        int res[] = new int[n];
-        System.out.println("Array");
-        for (int i = 0; i <n; i++) {
-            System.out.print(a[i] + " ");
-        }
-        System.out.println();
-
-        Stack<Integer> st = new Stack<>();
-
-        // The last number will have no next greater , so it's answer will be -1 always
-        res[n-1] = -1;
-        st.push(n-1); // push last index to stack
 
 
-        // For next greater element , we traverse backwards
-        for (int i = n-2; i>=0; i--) {
-            while(!st.isEmpty() && a[st.peek()]<=a[i] ){
-                // Until the stack is empty , and until we encounter a value in the stack which is larger than the current value - keep poppin
-                st.pop();
-            }
+        System.out.println("TESTING VALID PARENTHESIS");
 
-            // in case we came out of loop because stack is empty , it means there are no greater elements on the right
-            if(st.isEmpty()){
-                res[i] = -1;
-            }else{
-                // else what it means is the element at top of stack is greater than current , so add that to result for curr
-                res[i] = a[st.peek()];
-            }
-
-            // once we have figured out next greater element for a number , add it to stack
-            st.push(i);
+        String s0 = "[]";
+        System.out.println(s0 + " has valid parenthesis  = " + validParenthesis(s0));
+        String s01 = "[]}";
+        System.out.println(s01 + " has valid parenthesis  = " +validParenthesis(s01));
+        String s02 = "[]{}";
+        System.out.println(s0 + " has valid parenthesis  = " +validParenthesis(s02));
 
 
-        }
-
-        System.out.println("RES");
-        for (int i = 0; i < res.length; i++) {
-            System.out.print(res[i] + " ");
-        }
-        System.out.println();
-
+        System.out.println("TESTING Duplicate PARENTHESIS");
+        String s1 = "(a+b){}";
+        System.out.println(s1  + "  has duplicates  = " + duplicateParenthesis(s1));
+        String s11 = "(a+b)";
+        System.out.println(s11  + "  has duplicates  = " + duplicateParenthesis(s11));
     }
 
     public static void stockSpan(int a[]){
@@ -176,13 +145,200 @@ public class StackImpl {
 
 
     }
-    public static void main(String[] args) {
-        System.out.println("NEXT GREATER ELEMENT");
 
-        int b[] = {1,1,1,1,1,1,1,1};
-        nextGreaterElement(b);
+    public static boolean validParenthesis(String s){
+
+        Stack<Character> st = new Stack<>();
+
+        for (int i=0;i<s.length();i++) {
+            
+            Character character = s.charAt(i);
+            System.out.println(character);
+            if(character =='(' || character == '{' || character == '['){
+                // if character is opening
+              
+                st.push(character);
+            }else{
+
+                if(st.isEmpty()){
+                    return false;
+                } 
+               switch (character) {
+                case '}':{
+                 
+                    if(st.peek() != '{'){
+                        return false;
+                    }
+
+               
+                    break;
+                }
+                case ']':{
+                     if(st.peek() != '['){
+                        return false;
+                    }
+                
+                    break;
+                }
+                case ')':{
+                    if(st.peek() != '('){
+                        return false;
+                    }
+                 
+                    break;
+                }               
+                default:
+                    break;
+               }
+
+                st.pop();
+            }
+
+            System.out.println(st);
+            
+        }
+
+
+        if(!st.isEmpty()){
+            return false;
+        }
+        return true;
+
+    }
+
+    // assumption is that the string will have valid parenthesis lol
+    public static boolean duplicateParenthesis(String s){
+
+        Stack<Character> st = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            Character character = s.charAt(i);
+            
+            if(character =='}' || character == ']' || character == ')'){
+                // if character is a closing bracket 
+              int count = 0;
+              switch (character) {
+                case '}':{
+
+                    while(st.peek()!='{'){
+                        st.pop(); // pop out all the operators and operands
+                        count++;
+                    }
+                 
+                    if(count == 0){
+                        // means this bracket is a duplicate
+                        return true;
+                    }
+
+                    // now we also pop the opening bracket
+                    st.pop();
+               
+                    break;
+                }
+                case ']':{
+                    while(st.peek()!='['){
+                        st.pop(); // pop out all the operators and operands
+                        count++;
+                    }
+                 
+                    if(count == 0){
+                        // means this bracket is a duplicate
+                        return true;
+                    }
+
+                    // now we also pop the opening bracket
+                    st.pop();
+               
+                    break;
+                }
+                case ')':{
+                    while(st.peek()!='('){
+                        st.pop(); // pop out all the operators and operands
+                        count++;
+                    }
+                 
+                    if(count == 0){
+                        // means this bracket is a duplicate
+                        return true;
+                    }
+
+                    // now we also pop the opening bracket
+                    st.pop();
+               
+                    break;
+                }               
+                default:
+                    break;
+               }
+ 
+            }else{
+
+ 
+               st.push(character);
+
+
+            }
+
+        }
+
+        return false;
+        
+    }
+
+    public static void maximumHistogramArea(){
+
+    }
+
+     public static void nextGreaterElement(int a[]){
 
     
+        int n = a.length;
+        if(n==0) return;
+        int res[] = new int[n];
+        System.out.println("Array");
+        for (int i = 0; i <n; i++) {
+            System.out.print(a[i] + " ");
+        }
+        System.out.println();
+
+        Stack<Integer> st = new Stack<>();
+
+        // The last number will have no next greater , so it's answer will be -1 always
+        res[n-1] = -1;
+        st.push(a[n-1]); // push last index to stack
+
+
+        // For next greater element , we traverse backwards
+        for (int i = n-2; i>=0; i--) {
+            while(!st.isEmpty() && st.peek()<=a[i] ){
+                // Until the stack is empty , and until we encounter a value in the stack which is larger than the current value - keep poppin
+                st.pop();
+            }
+
+            // in case we came out of loop because stack is empty , it means there are no greater elements on the right
+            if(st.isEmpty()){
+                res[i] = -1;
+            }else{
+                // else what it means is the element at top of stack is greater than current , so add that to result for curr
+                res[i] = st.peek();
+            }
+
+            // once we have figured out next greater element for a number , add it to stack
+            st.push(a[i]);
+
+
+        }
+
+        System.out.println("RES");
+        for (int i = 0; i < res.length; i++) {
+            System.out.print(res[i] + " ");
+        }
+        System.out.println();
+
+    }
+    public static void main(String[] args) {
+
+
+
 
     }
     
