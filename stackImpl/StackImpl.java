@@ -521,7 +521,7 @@ public class StackImpl {
     }
     public static void main(String[] args) {
 
-       System.out.println("NEXT GREATER ELEMENT");
+
 
         int b[] = {6, 2, 5, 4, 5, 1, 6};
         // answer is 2,6,10,6,8,3

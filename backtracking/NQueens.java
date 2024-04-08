@@ -67,6 +67,7 @@ public class NQueens {
         for (int i = 0; i < board.length; i++) {
 
             if(isSafe(board, row, i)){
+                // First always check if you can place Q on that row
                 board[row][i] = 'Q';
                 NqueenPlace(board, row+1);
                 board[row][i] = 'x';
