@@ -1,5 +1,8 @@
 
 package arrays;
+
+// Revised on 27-04-2024 
+// Time taken - 5 mins
 public class TrappedRainWater{
 
 
