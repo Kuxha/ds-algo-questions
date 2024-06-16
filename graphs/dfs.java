@@ -4,7 +4,7 @@ import java.util.*;
 
 
 
-public class bfs {
+public class dfs {
 
     static class Edge{ 
 
@@ -20,7 +20,29 @@ public class bfs {
         }
     }
 
-    static void BFS(ArrayList<Edge>[] graph){
+    static void DFSutil(ArrayList<Edge>[] graph,int curr,boolean []vis){
+
+        // First curr ko visit curro
+        vis[curr] = true;
+        System.out.print(curr + " ");
+
+        // then go to the neighbours of curr - and simply dfsutil ek ek karke call karo
+
+        for (int i = 0; i < graph[curr].size(); i++) {
+
+            Edge e = graph[curr].get(i);
+            if(!vis[e.dest]){
+                DFSutil(graph, e.dest, vis);
+            }
+            
+        }
+
+
+    }
+
+    static void DFS(ArrayList<Edge>[] graph){
+
+        System.out.print("\nTHE DFS Travesal is \n");
 
         // Number of vertices = graph length
         int vertices = graph.length;
@@ -30,44 +52,18 @@ public class bfs {
         Queue<Integer> q = new LinkedList<>();
 
         // Then we create a visited array
-       boolean visited[] = new boolean[ vertices];
+        boolean visited[] = new boolean[ vertices];
+        DFSutil(graph, 0, visited);
 
-        // Finally we add the first node to our queue
 
-        q.add(0);
 
-        while(!q.isEmpty()){
-            // First remove the first element of the queue
-
-            int curr = q.remove();
-
-            if(!visited[curr]){
-                    // If the node is not visited  - perform three things
-                    // step 1 - mark the node as visited
-                    visited[curr] = true;
-                    // step 2 - print the node
-                    System.out.print(curr + " ");
-                    // step 3 - add all children to the queue
-
-              
-                    for (int i = 0; i < graph[curr].size(); i++) {
-                        // Basically we first go the the current node in graph
-                        // From there we get an array list of edges
-                        // Iterate through each edge -- and keep adding the destination
-                        Edge e = graph[curr].get(i);
-                        q.add(e.dest);
-                    }
-
-            }
-
-        }
     }
 
     public static void main(String[] args) {
         int V = 7;
         ArrayList <Edge> graph[] = new ArrayList[V];
         createGraph(graph);
-        BFS(graph);
+        DFS(graph);
     }
 
 
