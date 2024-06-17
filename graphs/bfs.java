@@ -20,21 +20,40 @@ public class bfs {
         }
     }
 
-    static void BFS(ArrayList<Edge>[] graph){
+    static void BFS (ArrayList<Edge>[] graph){
+        int vertices = graph.length;
+        boolean visited[] = new boolean[ vertices];
+
+
+        for (int i = 0; i < graph.length; i++) {
+            if(!visited[i]){
+
+                System.err.println("New Component starts with " + i + "\n");
+                BFSutil(graph, visited,i);
+            }
+  
+
+        }
+    
+
+
+
+    }
+    static void BFSutil(ArrayList<Edge>[] graph,   boolean visited[],int start){
 
         // Number of vertices = graph length
-        int vertices = graph.length;
+   
 
         // First we initialize a queue
         // We add vertices to this queue , hence the type is integer
         Queue<Integer> q = new LinkedList<>();
 
         // Then we create a visited array
-       boolean visited[] = new boolean[ vertices];
+
 
         // Finally we add the first node to our queue
 
-        q.add(0);
+        q.add(start);
 
         while(!q.isEmpty()){
             // First remove the first element of the queue
@@ -64,7 +83,7 @@ public class bfs {
     }
 
     public static void main(String[] args) {
-        int V = 7;
+        int V = 9;
         ArrayList <Edge> graph[] = new ArrayList[V];
         createGraph(graph);
         BFS(graph);
@@ -86,7 +105,7 @@ public class bfs {
                  1-------3
                 /        |\
               /          | \
-             0           |  5----6
+             0           |  5----6   7----8
               \          |  /
                \         | /
                 2--------4
@@ -123,6 +142,8 @@ public class bfs {
         //node 6
         graph[6].add(new Edge(6, 5, 1));
 
+
+        graph[7].add(new Edge(7, 8, 1));
         System.err.println("Graph Created");
         
     }
